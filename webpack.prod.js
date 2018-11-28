@@ -76,13 +76,13 @@ module.exports = {
 
 	output: {
 		filename: '[name].[chunkhash].js',
-		path: path.resolve(__dirname, 'build')
+		path: path.resolve(__dirname, 'dist')
 	},
 
-	mode: 'development',
+	mode: 'production',
 
 	plugins:[
-		new CleanWebpackPlugin(['build'])
+		new CleanWebpackPlugin(['dist'])
 	],
 	optimization: {
 		splitChunks: {
