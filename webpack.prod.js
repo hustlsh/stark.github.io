@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -31,46 +33,19 @@ module.exports = {
 			{
 				include: [path.resolve(__dirname, 'src')],
 				loader: 'babel-loader',
-
-				options: {
-					plugins: ['syntax-dynamic-import'],
-
-					presets: [
-						[
-							'env',
-							{
-								modules: false
-							}
-						]
-					]
-				},
-
 				test: /\.js$/
 			},
 			{
 				test: /\.css$/,
-
 				use: [
-					{
-						loader: 'style-loader',
-
-						options: {
-							sourceMap: true
-						}
-					},
-					{
-						loader: 'css-loader'
-					}
+					MiniCssExtractPlugin.loader,
+					'css-loader'
 				]
 			}
 		]
 	},
 
 	entry: {
-		vendor:  [
-			'react',
-			'react-dom'
-		  ],
 		index: './src/index.js'
 	},
 
@@ -81,8 +56,18 @@ module.exports = {
 
 	mode: 'production',
 
-	plugins:[
-		new CleanWebpackPlugin(['dist'])
+	plugins: [
+		new CleanWebpackPlugin(['dist']),
+		new HtmlWebpackPlugin({
+			template: 'public/index.html'
+		}),
+		new webpack.DefinePlugin({
+			'progress.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+		}),
+		new MiniCssExtractPlugin({
+			filename: '[name].[hash].css',
+			chunkFilename: '[id].[hash].css'
+		})
 	],
 	optimization: {
 		splitChunks: {
@@ -93,7 +78,7 @@ module.exports = {
 				}
 			},
 
-			chunks: 'async',
+			chunks: 'all',
 			minChunks: 1,
 			minSize: 30000,
 			name: true
