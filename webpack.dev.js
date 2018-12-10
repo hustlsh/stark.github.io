@@ -3,6 +3,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -47,7 +48,10 @@ module.exports = {
 		]
 	},
 	entry: {
-		index: './src/index.js'
+		// Add the client which connects to our middleware
+		// You can use full urls like 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr'
+		// useful if you run your app from another point like django
+		index: ['./src/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000']
 	},
 
 	output: {
@@ -65,10 +69,14 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'progress.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
 		}),
+		new webpack.optimize.OccurrenceOrderPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
 		new MiniCssExtractPlugin({
 			filename: '[name].css',
 			chunkFilename: '[id].css'
-		})
+		}),
+		new OpenBrowserPlugin()
 	],
 	optimization: {
 		splitChunks: {
