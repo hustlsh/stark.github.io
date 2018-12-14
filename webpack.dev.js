@@ -60,7 +60,7 @@ module.exports = {
 	},
 
 	mode: 'development',
-
+	devtool:'source-map',
 	plugins: [
 		new CleanWebpackPlugin(['build']),
 		new HtmlWebpackPlugin({
