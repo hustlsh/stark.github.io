@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 
-import App from './components/App';
-import 'react-redux';
 import './css/index.css';
-import store from './store';
+import ReduxApp from './reduxApp/App';
+import ReactReduxApp from './reactReduxApp/App';
 
 /**
  * 主入口
  */
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <div>
+        <ReduxApp />
+        <ReactReduxApp />
+    </div>,
     document.getElementById('root')
 );
 
