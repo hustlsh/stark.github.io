@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "build": "webpack --config webpack.dev.js",
     "build:prod": "webpack --config webpack.prod.js",
-    "prebuild:prod":"git add . && git commit -n -m build-prod && git push",
+    "postbuild:prod":"git add . && git commit -n -m build-prod && git push",
     "gh-pages": "node ./scripts/gh-pages.js"
   },
   "license": "MIT",
