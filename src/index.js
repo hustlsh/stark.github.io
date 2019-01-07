@@ -15,6 +15,8 @@ function Main(props) {
                 <Link to='/redux'>redux</Link>
                 <Link to='/react-redux'>react-redux</Link>
             </p>
+            <Route path='/react-redux' component={ReactReduxApp} />
+            <Route path='/redux' component={ReduxApp} />
         </div>
     )
 }
@@ -35,10 +37,10 @@ function Bottom() {
  */
 ReactDOM.render(
     <Router>
-        <Route exact path='/' component={Main} />
-        <Route path='/react-redux' component={ReactReduxApp} />
-        <Route path='/redux' component={ReduxApp} />
-        <Route component={Bottom} />
+        <Switch>
+            <Route path='/' component={Main} />
+            <Route component={Bottom} />
+        </Switch>
     </Router>,
     document.getElementById('root')
 );

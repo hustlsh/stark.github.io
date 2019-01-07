@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "build": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js"
+    "build:prod": "webpack --config webpack.prod.js",
+    "prebuild:prod":"git add . && git commit -n -m build-prod && git push",
+    "gh-pages": "node ./scripts/gh-pages.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -32,6 +34,7 @@
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
     "extract-text-webpack-plugin": "^3.0.2",
+    "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.5",
     "open-browser-webpack-plugin": "0.0.5",
